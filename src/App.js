@@ -4,27 +4,29 @@ import { useState } from 'react';
 import shortid from 'shortid';
 
 const App = () => {
+	const [books, setBooks] = useState([
+		{ id: 1, title: 'Title 1', author: 'Author 1' },
+		{ id: 2, title: 'Title 2', author: 'Author 2' },
+	]);
 
-  const [books, setBooks] = useState([
-    { id: 1, title: 'Title 1', author: 'Author 1' },
-    { id: 2, title: 'Title 2', author: 'Author 2' }
-  ]);
+	const removeBook = (bookId) => {
+		setBooks(books.filter((book) => book.id !== bookId));
+	};
 
-  const removeBook = bookId => {
-    setBooks(books.filter(book => book.id !== bookId));
-  };
+	const addBook = (newBook) => {
+		setBooks([
+			...books,
+			{ id: shortid(), title: newBook.title, author: newBook.author },
+		]);
+	};
 
-  const addBook = newBook => {
-    setBooks([...books, {id: shortid(), title: newBook.title, author: newBook.author}]);
-  };
-
-  return (
-    <div>
-      <h1>Books App</h1>
-      <BooksList books={books} setBooks={setBooks} removeBook={removeBook} />
-      <BookForm addBook={addBook} />
-    </div>
-  );
-}
+	return (
+		<div>
+			<h1>Books App</h1>
+			<BooksList books={books} removeBook={removeBook} />
+			<BookForm addBook={addBook} />
+		</div>
+	);
+};
 
 export default App;
