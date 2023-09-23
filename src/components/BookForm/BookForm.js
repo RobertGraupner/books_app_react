@@ -1,33 +1,37 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-const BookForm = ({ addBook }) => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
+const BookForm = () => {
+	const [title, setTitle] = useState('');
+	const [author, setAuthor] = useState('');
+	const dispatch = useDispatch();
 
-  const handleSubmit = (e) => { 
-    e.preventDefault();
-    addBook({ title, author });
-    setTitle('');
-    setAuthor('');
-  }
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch({ type: 'ADD_BOOK', payload: { title, author } });
+		setTitle('');
+		setAuthor('');
+	};
 
-  return (
-    <form onSubmit={handleSubmit}>
-      Title: <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      Author: <input
-        type="text"
-        placeholder="Author"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-      />
-      <button>Add book</button>
-    </form>
-  );
+	return (
+		<form onSubmit={handleSubmit}>
+			Title:{' '}
+			<input
+				type='text'
+				placeholder='Title'
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+			/>
+			Author:{' '}
+			<input
+				type='text'
+				placeholder='Author'
+				value={author}
+				onChange={(e) => setAuthor(e.target.value)}
+			/>
+			<button>Add book</button>
+		</form>
+	);
 };
 
 export default BookForm;
